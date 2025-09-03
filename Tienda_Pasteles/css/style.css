@@ -67,11 +67,8 @@ footer {
 /* Estilo para la imagen principal de la página de detalle */
 .product-main-image {
     width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    height: 100%;
+    object-fit: contain; /* La imagen principal también se ajusta completamente */
 }
 
 /* Estilo para las miniaturas en la página de detalle */
