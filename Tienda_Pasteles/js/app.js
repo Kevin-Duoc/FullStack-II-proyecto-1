@@ -115,22 +115,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    const obtenerCarro = () => {
-        const carro = localStorage.getItem('carro');
-        return carro ? JSON.parse(carro) : [];
-    };
-
-    const guardarCarro = (carro) => {
-        localStorage.setItem('carro', JSON.stringify(carro));
-    };
-
+    // Funciones relacionadas con el carrito que ya no interactúan con localStorage
     const actualizarContadorCarro = () => {
-        const carro = obtenerCarro();
-        const contador = carro.reduce((total, item) => total + item.cantidad, 0);
         const contadorElement = document.getElementById('cart-count');
         if (contadorElement) {
-            contadorElement.textContent = `Carro (${contador})`;
+            contadorElement.textContent = `Carro (0)`;
         }
+    };
+    
+    // Funciones que no se usarán para el carrito estático
+    // const obtenerCarro = () => {
+    //     const carro = localStorage.getItem('carro');
+    //     return carro ? JSON.parse(carro) : [];
+    // };
+
+    // const guardarCarro = (carro) => {
+    //     localStorage.setItem('carro', JSON.stringify(carro));
+    // };
+    
+    // La función agregarAlCarro ya no es necesaria, pero se mantiene para evitar errores si se llama
+    const agregarAlCarro = (producto, cantidad) => {
+        alert(`${cantidad} ${producto.nombre} agregado(s) al carro.`);
     };
 
     const listarProductos = () => {
@@ -162,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         let productId = urlParams.get('id');
         
-        // Carga el primer producto por defecto si no hay un ID en la URL
         if (!productId) {
             productId = productos[0].id;
         }
@@ -237,66 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     };
-
-    const agregarAlCarro = (producto, cantidad) => {
-        const carro = [{ ...producto, cantidad }];
-        guardarCarro(carro);
-        actualizarContadorCarro();
-        alert(`${cantidad} ${producto.nombre} agregado(s) al carro.`);
-    };
-
-    const mostrarCarro = () => {
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalElement = document.getElementById('cart-total');
-        let carro = obtenerCarro();
-        
-        if (cartItemsContainer) {
-            if (carro.length === 0) {
-                const productosPorDefecto = [
-                    productos.find(p => p.id === 'PI001'),
-                    productos.find(p => p.id === 'PT002'),
-                    productos.find(p => p.id === 'TE001')
-                ];
-                carro = productosPorDefecto.filter(p => p).map(p => ({ ...p, cantidad: 1 }));
-                guardarCarro(carro);
-            }
-            
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-
-            if (carro.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-center">Tu carro de compras está vacío.</p>';
-            } else {
-                carro.forEach(item => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'd-flex align-items-center mb-4';
-                    const subtotal = item.precio * item.cantidad;
-                    total += subtotal;
-
-                    itemElement.innerHTML = `
-                        <div class="card-img-container" style="width: 150px; height: 150px;">
-                            <img src="images/${item.imagen}" alt="${item.nombre}">
-                        </div>
-                        <div class="ms-3 flex-grow-1">
-                            <h4>${item.nombre}</h4>
-                            <p class="h5"><strong>$${subtotal.toLocaleString('es-CL')}</strong></p>
-                            <div class="d-flex align-items-center">
-                                <span>Cantidad: ${item.cantidad}</span>
-                            </div>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(itemElement);
-                });
-            }
-            if (cartTotalElement) {
-                cartTotalElement.textContent = `TOTAL: $${total.toLocaleString('es-CL')}`;
-            }
-        }
-    };
     
-    // Llamadas globales
+    // Llamadas globales para que se ejecuten en todas las páginas
     listarProductos();
     mostrarDetalleProducto();
-    mostrarCarro();
     actualizarContadorCarro();
 });
