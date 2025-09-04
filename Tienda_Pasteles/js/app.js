@@ -2,32 +2,116 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const productos = [
         {
-            id: 'prod01',
-            nombre: 'Torta Tres Leches',
-            descripcion: 'Clásica y deliciosa, con una base de bizcocho esponjoso, remojada en una mezcla de tres leches y cubierta con crema batida. El postre perfecto para cualquier ocasión.',
-            precio: 15000,
-            imagen: 'torta_tres_leches.jpg'
+            id: 'TC001',
+            nombre: 'Torta Cuadrada de Chocolate',
+            descripcion: 'Deliciosa torta de chocolate con capas de ganache y un toque de avellanas. Personalizable con mensajes especiales.',
+            precio: 45000,
+            imagen: 'torta_cuadrada_chocolate.jpg'
         },
         {
-            id: 'prod02',
-            nombre: 'Tarta de Frutas',
-            descripcion: 'Una tarta fresca y frutal, con una base de masa quebrada y un relleno de crema pastelera. Decorada con frutas de temporada para un sabor vibrante y delicioso.',
-            precio: 10000,
-            imagen: 'tarta_frutas.jpg'
+            id: 'TC002',
+            nombre: 'Torta Cuadrada de Frutas',
+            descripcion: 'Una mezcla de frutas frescas y crema chantilly sobre un suave bizcocho de vainilla, ideal para celebraciones.',
+            precio: 50000,
+            imagen: 'torta_cuadrada_frutas.jpg'
         },
         {
-            id: 'prod03',
+            id: 'TT001',
+            nombre: 'Torta Circular de Vainilla',
+            descripcion: 'Bizcocho de vainilla clásico relleno con crema pastelera y cubierto con un glaseado dulce, perfecto para cualquier ocasión.',
+            precio: 40000,
+            imagen: 'torta_circular_vainilla.jpg'
+        },
+        {
+            id: 'TT002',
+            nombre: 'Torta Circular de Manjar',
+            descripcion: 'Torta tradicional chilena con manjar y nueces, un deleite para los amantes de los sabores dulces y clásicos.',
+            precio: 42000,
+            imagen: 'torta_circular_manjar.jpg'
+        },
+        {
+            id: 'PI001',
+            nombre: 'Mousse de Chocolate',
+            descripcion: 'Postre individual cremoso y suave, hecho con chocolate de alta calidad, ideal para los amantes del chocolate.',
+            precio: 5000,
+            imagen: 'mousse_chocolate.jpg'
+        },
+        {
+            id: 'PI002',
+            nombre: 'Tiramisú Clásico',
+            descripcion: 'Un postre italiano individual con capas de café, mascarpone y cacao, perfecto para finalizar cualquier comida.',
+            precio: 5500,
+            imagen: 'tiramisu_clasico.jpg'
+        },
+        {
+            id: 'PSA001',
+            nombre: 'Torta Sin Azúcar de Naranja',
+            descripcion: 'Torta ligera y deliciosa, endulzada naturalmente, ideal para quienes buscan opciones más saludables.',
+            precio: 48000,
+            imagen: 'torta_sin_azucar_naranja.jpg'
+        },
+        {
+            id: 'PSA002',
+            nombre: 'Cheesecake Sin Azúcar',
+            descripcion: 'Suave y cremoso, este cheesecake es una opción perfecta para disfrutar sin culpa.',
+            precio: 47000,
+            imagen: 'cheesecake_sin_azucar.jpg'
+        },
+        {
+            id: 'PT001',
+            nombre: 'Empanada de Manzana',
+            descripcion: 'Pastelería tradicional rellena de manzanas especiadas, perfecta para un dulce desayuno o merienda.',
+            precio: 3000,
+            imagen: 'empanada_manzana.jpg'
+        },
+        {
+            id: 'PT002',
+            nombre: 'Tarta de Santiago',
+            descripcion: 'Tradicional tarta española hecha con almendras, azúcar, y huevos, una delicia para los amantes de los postres clásicos.',
+            precio: 6000,
+            imagen: 'tarta_santiago.jpg'
+        },
+        {
+            id: 'PG001',
             nombre: 'Brownie Sin Gluten',
-            descripcion: 'Un brownie rico y denso, ideal para quienes necesitan evitar el gluten sin sacrificar el sabor. Con un intenso sabor a chocolate y una textura perfecta.',
-            precio: 4500,
+            descripcion: 'Rico y denso, este brownie es perfecto para quienes necesitan evitar el gluten sin sacrificar el sabor.',
+            precio: 4000,
             imagen: 'brownie_sin_gluten.jpg'
         },
         {
-            id: 'prod04',
-            nombre: 'Torta Especial Cumpleaños',
-            descripcion: 'Una torta personalizada, diseñada para celebrar momentos especiales. Puedes elegir el sabor del bizcocho, el relleno y la decoración para hacerla única.',
-            precio: 20000,
-            imagen: 'torta_cumpleanos.jpg'
+            id: 'PG002',
+            nombre: 'Pan Sin Gluten',
+            descripcion: 'Suave y esponjoso, ideal para sandwiches o para acompañar cualquier comida.',
+            precio: 3500,
+            imagen: 'pan_sin_gluten.jpg'
+        },
+        {
+            id: 'PV001',
+            nombre: 'Torta Vegana de Chocolate',
+            descripcion: 'Torta de chocolate húmeda y deliciosa, hecha sin productos de origen animal, perfecta para veganos.',
+            precio: 50000,
+            imagen: 'torta_vegana_chocolate.jpg'
+        },
+        {
+            id: 'PV002',
+            nombre: 'Galletas Veganas de Avena',
+            descripcion: 'Crujientes y sabrosas, estas galletas son una excelente opción para un snack saludable y vegano.',
+            precio: 4500,
+            imagen: 'galletas_veganas_avena.jpg'
+        },
+        {
+            id: 'TE001',
+            nombre: 'Torta Especial de Cumpleaños',
+            descripcion: 'Diseñada especialmente para celebraciones, personalizable con decoraciones y mensajes únicos.',
+            precio: 55000,
+            imagen: 'torta_especial_cumpleanos.jpg'
+        },
+        {
+            id: 'TE002',
+            nombre: 'Torta Especial de Boda',
+            descripcion: 'Elegante y deliciosa, esta torta está diseñada para ser el centro de atención en cualquier boda.',
+            precio: 60000,
+            imagen: 'torta_especial_boda.jpg'
         }
     ];
 
@@ -45,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const contador = carro.reduce((total, item) => total + item.cantidad, 0);
         const contadorElement = document.getElementById('cart-count');
         if (contadorElement) {
-             contadorElement.textContent = `Carro (${contador})`;
+            contadorElement.textContent = `Carro (${contador})`;
         }
     };
 
@@ -60,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 productCard.innerHTML = `
                     <div class="card">
                         <div class="card-img-container">
-                           <img src="images/${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                            <img src="images/${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
                         </div>
                         <div class="card-body text-center">
                             <h5 class="card-title">${producto.nombre}</h5>
@@ -76,31 +160,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mostrarDetalleProducto = () => {
         const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
+        let productId = urlParams.get('id');
+        
+        // Carga el primer producto por defecto si no hay un ID en la URL
+        if (!productId) {
+            productId = productos[0].id;
+        }
+
         const producto = productos.find(p => p.id === productId);
 
         if (producto) {
             document.getElementById('product-name').textContent = producto.nombre;
             document.getElementById('product-price').textContent = `$${producto.precio.toLocaleString('es-CL')}`;
             document.getElementById('product-description').textContent = producto.descripcion;
-            document.getElementById('product-image').src = `images/${producto.imagen}`;
-            document.getElementById('product-image').alt = producto.nombre;
+            
+            const productImage = document.getElementById('product-image');
+            if (productImage) {
+                productImage.src = `images/${producto.imagen}`;
+                productImage.alt = producto.nombre;
+            }
 
-            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-                const cantidadInput = document.getElementById('cantidad');
-                const cantidad = parseInt(cantidadInput.value, 10);
-                if (cantidad > 0) {
-                    agregarAlCarro(producto, cantidad);
-                } else {
-                    alert('La cantidad debe ser un número positivo.');
-                }
-            });
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', () => {
+                    agregarAlCarro(producto, 1);
+                });
+            }
             mostrarProductosRelacionados(producto.id);
             mostrarMiniaturas(producto.imagen);
         } else {
             const container = document.getElementById('product-detail-container');
             if (container) {
-                container.innerHTML = '<div class="alert alert-danger" role="alert">Producto no encontrado.</div>';
+                container.innerHTML = '<div class="alert alert-danger" role="alert">Producto no encontrado. Por favor, navega desde la página de productos.</div>';
             }
         }
     };
@@ -109,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const miniaturasContainer = document.getElementById('miniaturas-container');
         if (miniaturasContainer) {
             miniaturasContainer.innerHTML = '';
-            // Por simplicidad, usamos la misma imagen para las 3 miniaturas
             for (let i = 0; i < 3; i++) {
                 const miniaturaDiv = document.createElement('div');
                 miniaturaDiv.className = 'product-thumbnail';
@@ -149,14 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const agregarAlCarro = (producto, cantidad) => {
-        const carro = obtenerCarro();
-        const productoExistente = carro.find(item => item.id === producto.id);
-
-        if (productoExistente) {
-            productoExistente.cantidad += cantidad;
-        } else {
-            carro.push({ ...producto, cantidad });
-        }
+        const carro = [{ ...producto, cantidad }];
         guardarCarro(carro);
         actualizarContadorCarro();
         alert(`${cantidad} ${producto.nombre} agregado(s) al carro.`);
@@ -165,14 +248,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const mostrarCarro = () => {
         const cartItemsContainer = document.getElementById('cart-items');
         const cartTotalElement = document.getElementById('cart-total');
-
+        let carro = obtenerCarro();
+        
         if (cartItemsContainer) {
-            const carro = obtenerCarro();
+            if (carro.length === 0) {
+                const productosPorDefecto = [
+                    productos.find(p => p.id === 'PI001'),
+                    productos.find(p => p.id === 'PT002'),
+                    productos.find(p => p.id === 'TE001')
+                ];
+                carro = productosPorDefecto.filter(p => p).map(p => ({ ...p, cantidad: 1 }));
+                guardarCarro(carro);
+            }
+            
             cartItemsContainer.innerHTML = '';
             let total = 0;
 
             if (carro.length === 0) {
-                 cartItemsContainer.innerHTML = '<p class="text-center">Tu carro de compras está vacío.</p>';
+                cartItemsContainer.innerHTML = '<p class="text-center">Tu carro de compras está vacío.</p>';
             } else {
                 carro.forEach(item => {
                     const itemElement = document.createElement('div');
@@ -181,60 +274,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     total += subtotal;
 
                     itemElement.innerHTML = `
-                        <div style="width: 150px; height: 150px; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
-                            <img src="images/${item.imagen}" alt="${item.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-img-container" style="width: 150px; height: 150px;">
+                            <img src="images/${item.imagen}" alt="${item.nombre}">
                         </div>
                         <div class="ms-3 flex-grow-1">
                             <h4>${item.nombre}</h4>
-                            <p class="text-muted">${item.descripcion}</p>
-                            <p class="h5"><strong>$${item.precio.toLocaleString('es-CL')}</strong></p>
+                            <p class="h5"><strong>$${subtotal.toLocaleString('es-CL')}</strong></p>
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-outline-secondary btn-sm me-2 btn-restar" data-id="${item.id}">-</button>
-                                <span>${item.cantidad}</span>
-                                <button class="btn btn-outline-secondary btn-sm ms-2 btn-sumar" data-id="${item.id}">+</button>
+                                <span>Cantidad: ${item.cantidad}</span>
                             </div>
                         </div>
                     `;
                     cartItemsContainer.appendChild(itemElement);
                 });
             }
-
-            cartTotalElement.textContent = `TOTAL: $${total.toLocaleString('es-CL')}`;
-
-            cartItemsContainer.querySelectorAll('.btn-sumar').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const id = e.target.dataset.id;
-                    const carro = obtenerCarro();
-                    const producto = carro.find(item => item.id === id);
-                    if (producto) {
-                        producto.cantidad++;
-                        guardarCarro(carro);
-                        mostrarCarro();
-                        actualizarContadorCarro();
-                    }
-                });
-            });
-
-            cartItemsContainer.querySelectorAll('.btn-restar').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const id = e.target.dataset.id;
-                    let carro = obtenerCarro();
-                    const producto = carro.find(item => item.id === id);
-                    if (producto) {
-                        producto.cantidad--;
-                        if (producto.cantidad <= 0) {
-                            carro = carro.filter(item => item.id !== id);
-                        }
-                        guardarCarro(carro);
-                        mostrarCarro();
-                        actualizarContadorCarro();
-                    }
-                });
-            });
+            if (cartTotalElement) {
+                cartTotalElement.textContent = `TOTAL: $${total.toLocaleString('es-CL')}`;
+            }
         }
     };
     
-    // Llamadas globales para que se ejecuten en todas las páginas
+    // Llamadas globales
     listarProductos();
     mostrarDetalleProducto();
     mostrarCarro();

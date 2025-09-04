@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
@@ -45,7 +45,7 @@
                         </li>
                     </ul>
                     <a class="nav-link" href="carro.html">
-                        <i class="material-icons">shopping_cart</i> Carro (0)
+                        <i class="material-icons">shopping_cart</i> <span id="cart-count">Carro (0)</span>
                     </a>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <div class="card p-4">
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">Registro de usuario</h2>
-                        <form id="registro-form" action="" method="post" class="row g-3">
+                        <form id="registro-form" action="sesionIniciada.html" method="get" class="row g-3">
                             <div class="col-md-12">
                                 <label for="nombreCompleto" class="form-label">NOMBRE COMPLETO</label>
                                 <input type="text" class="form-control" id="nombreCompleto" required>
@@ -98,6 +98,7 @@
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-primary">REGISTRAR</button>
                             </div>
+                                  
                         </form>
                     </div>
                 </div>
@@ -105,7 +106,7 @@
         </section>
     </main>
 
-    <footer class="bg-dark text-white text-center py-3 mt-5">
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
         <div class="container">
             <p>&copy; 2025 Pastelería 1000 Sabores. Todos los derechos reservados.</p>
         </div>
@@ -142,6 +143,21 @@
                 comunaSelect.disabled = true;
             }
         });
+
+
+        document.getElementById('registro-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // evita que se recargue la página inmediatamente
+
+        const nombreCompleto = document.getElementById('nombreCompleto').value;
+        const correo = document.getElementById('correo').value;
+
+        // Guardar en localStorage
+        localStorage.setItem('usuario', nombreCompleto);
+        localStorage.setItem('correo', correo);
+
+        // Redirigir a la página de sesión iniciada
+        window.location.href = 'sesionIniciada.html';
+    });
     </script>
 </body>
 </html>

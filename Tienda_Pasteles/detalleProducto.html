@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="detalle-producto-page">
+<body class="d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
@@ -54,11 +54,11 @@
     <main class="container my-5" id="product-detail-container">
         <div class="row">
             <div class="col-md-6">
-                <div class="main-image-container" style="width: 100%; height: 400px; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center;">
+                <div class="product-main-image-container">
                     <img id="product-image" src="" alt="Imagen del producto" class="product-main-image">
                 </div>
                 <div class="d-flex justify-content-between mt-3" id="miniaturas-container">
-                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <h1 id="product-name">Nombre del Producto</h1>
@@ -74,10 +74,10 @@
         <div class="mt-5">
             <h3>Productos Relacionados</h3>
             <div class="row" id="related-products-container">
-                </div>
+            </div>
         </div>
     </main>
-    <footer class="bg-dark text-white text-center py-3 mt-5">
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
         <div class="container">
             <p>&copy; 2025 Pastelería 1000 Sabores. Todos los derechos reservados.</p>
         </div>

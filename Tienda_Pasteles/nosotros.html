@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
     </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
@@ -45,7 +45,7 @@
                         </li>
                     </ul>
                     <a class="nav-link" href="carro.html">
-                        <i class="material-icons">shopping_cart</i> Carro (0)
+                        <i class="material-icons">shopping_cart</i> <span id="cart-count">Carro (0)</span>
                     </a>
                 </div>
             </div>
@@ -72,7 +72,7 @@
         </section>
     </main>
 
-    <footer class="bg-dark text-white text-center py-3 mt-5">
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
         <div class="container">
             <p>&copy; 2025 Pastelería 1000 Sabores. Todos los derechos reservados.</p>
         </div>
