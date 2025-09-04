@@ -47,7 +47,7 @@ El sitio corresponde a la **Pastelería 1000 Sabores**, donde los usuarios puede
   - Región y comuna (se cargan dinámicamente según la región seleccionada)
 
 - **Navegación completa** por menú con acceso a todas las páginas.  
-- **Carrito de compras** (placeholder con contador).  
+- **Carrito de compras.**  
 - **Validaciones básicas** en JavaScript.  
 
 ---
