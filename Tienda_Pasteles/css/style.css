@@ -132,3 +132,20 @@ main .product-main-image-container {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/*Estilo para el nombre de la pasteleria*/
+.site-name {
+font-family: 'Lobster', cursive;
+font-size: 2rem; 
+color: #6B3A1C;
+}
+
+/*Estilo para el texto del boton de registrarse dentro de iniciar sesión*/
+.registro-link {
+    color: #6B3A1C;
+    text-decoration: none;
+    font-weight: normal;
+}
+.registro-link:hover {
+    text-decoration: underline;
+}
