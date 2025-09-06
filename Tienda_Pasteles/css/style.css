@@ -124,7 +124,7 @@ main .product-main-image-container {
     color: #B0BEC5; /* Color Gris Claro */
 }
 
-
+/*para cortar textos con puntos suspensivos*/
 .card-title {
     display: -webkit-box;
     -webkit-line-clamp: 1; /* solo permite 1 línea */
@@ -140,7 +140,7 @@ font-size: 2rem;
 color: #6B3A1C;
 }
 
-/*Estilo para el texto del boton de registrarse dentro de iniciar sesión*/
+/*Estilo para el texto del boton de "reigstrate aqui" dentro de iniciar sesión*/
 .registro-link {
     color: #6B3A1C;
     text-decoration: none;
@@ -148,4 +148,21 @@ color: #6B3A1C;
 }
 .registro-link:hover {
     text-decoration: underline;
+}
+
+/*Estilo para el boton de registro e iniciar sesión*/
+.nav-link-personalizado {
+    display: inline-block; 
+    padding: 5px 8px; 
+    background-color: #8B4513;
+    color: white; 
+    text-decoration: none;
+    border-radius: 8px; 
+    font-family: sans-serif; 
+    font-size: 16px;
+    font-weight: bold; 
+    border: none; 
+    cursor: pointer; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+    margin-right: 15px;
 }
