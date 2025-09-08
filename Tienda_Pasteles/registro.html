@@ -71,15 +71,15 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="correo" class="form-label">CORREO</label>
-                                <input type="email" class="form-control" id="correo" required>
+                                <input type="email" class="form-control" id="correo" required placeholder="Ej: k.fuenzalida@duocuc.cl">
                             </div>
                             <div class="col-md-12">
                                 <label for="contrasena" class="form-label">CONTRASEÑA</label>
-                                <input type="password" class="form-control" id="contrasena" required>
+                                <input type="password" class="form-control" id="contrasena" required placeholder="************">
                             </div>
                             <div class="col-md-12">
                                 <label for="confirmarContrasena" class="form-label">CONFIRMAR CONTRASEÑA</label>
-                                <input type="password" class="form-control" id="confirmarContrasena" required>
+                                <input type="password" class="form-control" id="confirmarContrasena" required required placeholder="************">
                             </div>
                             <div class="col-md-12">
                                 <label for="telefono" class="form-label">TELÉFONO (opcional)</label>
@@ -101,6 +101,11 @@
                                     <option selected disabled value="">- Seleccione una comuna -</option>
                                 </select>
                             </div>
+                            <div class="col-md-12">
+                                <label for="codigo-descuento" class="form-label">Código de Descuento (opcional)</label>
+                                <input type="text" class="form-control" id="codigo-descuento" placeholder="Ej: 1000SABORES">
+                            </div>
+                            <div id="feedback-mensaje" class="col-12 mt-3 text-center fw-bold"></div>
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-primary">REGISTRAR</button>
                             </div>
@@ -150,7 +155,7 @@
             }
         });
 
-
+/*
         document.getElementById('registro-form').addEventListener('submit', function(e) {
         e.preventDefault(); // evita que se recargue la página inmediatamente
 
@@ -163,7 +168,59 @@
 
         // Redirigir a la página de sesión iniciada
         window.location.href = 'sesionIniciada.html';
-    });
+    });*/
+
+    
+    //CON ESTE METODO VALIDA EL DESCUENTO
+    const registroForm = document.getElementById('registro-form');
+
+    if (registroForm) {
+        registroForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita que la página se recargue
+
+            // 1. Obtenemos los valores de los campos
+            const nombreCompleto = document.getElementById('nombreCompleto').value;
+            const edad = parseInt(document.getElementById('edad').value, 10);
+            const correo = document.getElementById('correo').value;
+            const codigoDescuento = document.getElementById('codigo-descuento').value;
+            const feedbackDiv = document.getElementById('feedback-mensaje');
+
+            // 2. Lógica para determinar el descuento
+            let descuentoAplicado = 0;
+            let mensaje = "";
+
+            // Damos prioridad al descuento por edad, ya que es mayor
+            if (edad >= 50) {
+                descuentoAplicado = 50;
+                mensaje = `¡Felicidades! Por tener ${edad} años, has obtenido un 50% de descuento.`;
+            } else if (codigoDescuento.toUpperCase() === 'FELICES50') {
+                descuentoAplicado = 10;
+                mensaje = "¡Registro exitoso! Tu código 'FELICES50' te ha otorgado un 10% de descuento de por vida.";
+            } else {
+                mensaje = "¡Te has registrado con éxito!";
+            }
+
+            // 3. Creamos un objeto de usuario para guardarlo
+            const usuario = {
+                nombre: nombreCompleto,
+                email: correo,
+                descuento: descuentoAplicado
+            };
+
+            // 4. Guardamos el objeto de usuario en localStorage
+            // JSON.stringify convierte el objeto en un texto para poder guardarlo
+            localStorage.setItem('usuarioActual', JSON.stringify(usuario));
+
+            // 5. Mostramos el mensaje de éxito al usuario
+            feedbackDiv.innerText = mensaje;
+            feedbackDiv.style.color = 'green';
+
+            // 6. Redirigimos al usuario después de 3 segundos para que alcance a leer el mensaje
+            setTimeout(() => {
+                window.location.href = 'sesionIniciada.html';
+            }, 6000); // 3000 milisegundos = 3 segundos
+        });
+    }
     </script>
 </body>
 </html>

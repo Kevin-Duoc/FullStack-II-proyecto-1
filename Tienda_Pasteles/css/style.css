@@ -166,3 +166,13 @@ color: #6B3A1C;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
     margin-right: 15px;
 }
+
+.img-detalle-noti {
+  display: block;      
+  margin: 20px auto;
+  max-width: min(300px, 100%); /* ancho máximo 900px, pero que se adapte */
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+}
