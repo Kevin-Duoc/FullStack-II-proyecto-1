@@ -111,3 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+//Validacion para que al enviar una reseña/comentario salga al usuario que fue enviado con exito
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contacto-form");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // evita que recargue la página
+        alert("✅ Tu mensaje fue enviado con éxito. Gracias por contactarnos.");
+        form.reset(); // limpia los campos
+    });
+});

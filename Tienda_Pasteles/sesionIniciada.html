@@ -76,7 +76,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Torta Cuadrada de Chocolate</h5>
                         <p class="card-text">Deliciosa torta de chocolate con capas de ganache y un toque de avellanas.</p>
-                        <p class="card-text"><strong>$45.000</strong></p>
+                        <p class="card-text precio" data-precio="45000"><strong>$45.000</strong></p>
                         <a href="detalleProducto.html?id=TC001" class="btn btn-primary">Ver detalle</a>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Torta Cuadrada de Frutas</h5>
                         <p class="card-text">Una mezcla de frutas frescas y crema chantilly sobre un suave bizcocho.</p>
-                        <p class="card-text"><strong>$50.000</strong></p>
+                        <p class="card-text precio" data-precio="50000"><strong>$50.000</strong></p>
                         <a href="detalleProducto.html?id=TC002" class="btn btn-primary">Ver detalle</a>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Torta Circular de Vainilla</h5>
                         <p class="card-text">Bizcocho de vainilla clásico relleno con crema pastelera.</p>
-                        <p class="card-text"><strong>$40.000</strong></p>
+                        <p class="card-text precio" data-precio="40000"><strong>$40.000</strong></p>
                         <a href="detalleProducto.html?id=TT001" class="btn btn-primary">Ver detalle</a>
                     </div>
                 </div>
@@ -115,13 +115,60 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Torta Circular de Manjar</h5>
                         <p class="card-text">Torta tradicional chilena con manjar y nueces.</p>
-                        <p class="card-text"><strong>$42.000</strong></p>
+                        <p class="card-text precio" data-precio="42000"><strong>$42.000</strong></p>
                         <a href="detalleProducto.html?id=TT002" class="btn btn-primary">Ver detalle</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Recuperar usuario actual
+    const usuarioGuardado = localStorage.getItem("usuarioActual");
+    let descuento = 0;
+
+    if (usuarioGuardado) {
+        const usuario = JSON.parse(usuarioGuardado);
+        descuento = usuario.descuento || 0; 
+    }
+
+    // 2. Buscar todos los precios
+    const precios = document.querySelectorAll(".precio");
+
+    precios.forEach(precioElem => {
+        const precioOriginal = parseInt(precioElem.getAttribute("data-precio"), 10);
+
+        if (descuento > 0) {
+            const precioConDescuento = Math.round(precioOriginal * (1 - descuento / 100));
+
+            precioElem.innerHTML = `
+                <span style="color:red; text-decoration: line-through; margin-right:8px;">
+                    $${precioOriginal.toLocaleString("es-CL")}
+                </span>
+                <span style="color:green; font-weight:bold;">
+                    $${precioConDescuento.toLocaleString("es-CL")}
+                </span>
+                <br>
+                <small class="text-success">(${descuento}% dcto aplicado)</small>
+            `;
+        } else {
+            precioElem.innerHTML = `<strong>$${precioOriginal.toLocaleString("es-CL")}</strong>`;
+        }
+    });
+
+    // 3. Mostrar nombre en el menú
+    const linkUsuario = document.getElementById("usuarioLogueado");
+    if (usuarioGuardado) {
+        const usuario = JSON.parse(usuarioGuardado);
+        linkUsuario.textContent = usuario.nombre;
+        linkUsuario.href = "#";
+    } else {
+        linkUsuario.textContent = "Iniciar sesión";
+        linkUsuario.href = "inicioSesion.html";
+    }
+});
+</script>
 </body>
 
 <script>
