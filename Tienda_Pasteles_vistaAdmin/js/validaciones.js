@@ -162,45 +162,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica del formulario de contacto ---
-    const contactoForm = document.getElementById('contacto-form');
-    if (contactoForm) {
-        contactoForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const userIsLoggedIn = sessionStorage.getItem('userRole');
+    // const contactoForm = document.getElementById('contacto-form');
+    // if (contactoForm) {
+    //     contactoForm.addEventListener('submit', (event) => {
+    //         event.preventDefault();
+    //         const userIsLoggedIn = sessionStorage.getItem('userRole');
 
-            if (!userIsLoggedIn) {
-                alert('Debes iniciar sesión para enviar un mensaje.');
-                window.location.href = 'inicioSesion.html';
-                return;
-            }
+    //         if (!userIsLoggedIn) {
+    //             alert('Debes iniciar sesión para enviar un mensaje.');
+    //             window.location.href = 'inicioSesion.html';
+    //             return;
+    //         }
             
-            const nombre = document.getElementById('nombre').value.trim();
-            const correo = document.getElementById('correo').value.trim();
-            const comentario = document.getElementById('comentario').value.trim();
+    //         const nombre = document.getElementById('nombre').value.trim();
+    //         const correo = document.getElementById('correo').value.trim();
+    //         const comentario = document.getElementById('comentario').value.trim();
 
-            let valid = true;
-            if (nombre.length > 100) {
-                alert('El nombre no puede exceder los 100 caracteres.');
-                valid = false;
-            }
-            if (correo.length > 100) {
-                alert('El correo no puede exceder los 100 caracteres.');
-                valid = false;
-            }
-            const emailRegex = /(@duoc.cl|@profesor.duoc.cl|@gmail.com)$/;
-            if (!emailRegex.test(correo)) {
-                alert('El correo debe ser de los dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.');
-                valid = false;
-            }
-            if (comentario.length > 500) {
-                alert('El comentario no puede exceder los 500 caracteres.');
-                valid = false;
-            }
+    //         let valid = true;
+    //         if (nombre.length > 100) {
+    //             alert('El nombre no puede exceder los 100 caracteres.');
+    //             valid = false;
+    //         }
+    //         if (correo.length > 100) {
+    //             alert('El correo no puede exceder los 100 caracteres.');
+    //             valid = false;
+    //         }
+    //         const emailRegex = /(@duoc.cl|@profesor.duoc.cl|@gmail.com)$/;
+    //         if (!emailRegex.test(correo)) {
+    //             alert('El correo debe ser de los dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.');
+    //             valid = false;
+    //         }
+    //         if (comentario.length > 500) {
+    //             alert('El comentario no puede exceder los 500 caracteres.');
+    //             valid = false;
+    //         }
 
-            if (valid) {
-                alert('Mensaje enviado con éxito.');
-                contactoForm.reset();
-            }
-        });
-    }
+    //         if (valid) {
+    //             alert('Mensaje enviado con éxito.');
+    //             contactoForm.reset();
+    //         }
+    //     });
+    // }
 });
+

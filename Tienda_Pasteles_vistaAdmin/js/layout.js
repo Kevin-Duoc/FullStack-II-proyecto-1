@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a class="nav-link" href="carro.html">
                     <i class="material-icons">shopping_cart</i> <span id="cart-count">Carro (0)</span>
                 </a>
+                <a class="nav-link ms-3" href="ajusteusuario.html" title="Ajustes de usuario">
+                    <i class="material-icons">settings</i>
+                </a>
             </div>
         `;
         document.getElementById('logout-btn').addEventListener('click', () => {

@@ -60,7 +60,7 @@
                                 <input type="email" class="form-control" id="correo" required>
                             </div>
                             <div class="col-md-12">
-                                <label for="comentario" class="form-label">Comentario</label>
+                                <label for="mensaje" class="form-label">Comentario</label>
                                 <textarea class="form-control" id="comentario" rows="5" required></textarea>
                             </div>
                             <div class="col-12 text-center mt-4">
@@ -84,16 +84,22 @@
     <script src="js/validaciones.js"></script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const logueado = localStorage.getItem("logueado");
+document.addEventListener("DOMContentLoaded", () => {
+    const userRole = sessionStorage.getItem("userRole");
 
-        if (logueado === "true") {
-            // Ocultamos campos redundantes
-            document.getElementById("nombre").closest(".col-md-12").style.display = "none";
-            document.getElementById("correo").closest(".col-md-12").style.display = "none";
-        }
-    });
-    </script>
+    if (userRole) {
+        // Ocultamos campos redundantes
+        const nombreField = document.getElementById("nombre");
+        const correoField = document.getElementById("correo");
+
+        if (nombreField) nombreField.closest(".col-md-12").style.display = "none";
+        if (correoField) correoField.closest(".col-md-12").style.display = "none";
+    }
+});
+</script>
+
+<!--llama a script para los mensajes-->
+<script src="js/contacto.js"></script>
     
 </body>
 </html>
