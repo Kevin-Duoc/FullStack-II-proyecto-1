@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="d-flex">
+        <div class="admin-sidebar p-3 d-flex flex-column justify-content-between">
+            <div>
+                <h4 class="text-white">Pastelería 1000 Sabores</h4>
+                <ul class="nav flex-column mt-4" id="admin-menu">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="home-admin.html">Panel de Control</a>
+                    </li>
+                    <li class="nav-item" data-role="administrador,vendedor">
+                        <a class="nav-link" href="productos-admin.html">Productos</a>
+                    </li>
+                    <li class="nav-item" data-role="administrador,vendedor">
+                        <a class="nav-link" href="pedidos-admin.html">Pedidos</a>
+                    </li>
+                    <li class="nav-item" data-role="administrador">
+                        <a class="nav-link" href="inventario-admin.html">Inventario</a>
+                    </li>
+                    <li class="nav-item" data-role="administrador">
+                        <a class="nav-link" href="empleados-admin.html">Empleados</a>
+                    </li>
+                    <li class="nav-item" data-role="administrador">
+                        <a class="nav-link" href="clientes-admin.html">Clientes</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-auto">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Configuración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Buscar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ayuda</a>
+                    </li>
+                </ul>               
+                <hr>
+                <a class="nav-link" href="index.html" id="ver-tienda-btn">
+                    <i class="material-icons">store</i> Ver Tienda
+                </a>
+                <a class="nav-link" href="#" id="logout-admin-btn">
+                    <i class="material-icons">logout</i> Cerrar Sesión
+                </a>                
+            </div>
+        </div>
+        <div class="admin-content flex-grow-1">
+            <div class="admin-header p-3 d-flex justify-content-between align-items-center">
+                <h2>¡HOLA Administrador!</h2>
+                <a href="#" class="text-dark"><i class="material-icons">notifications</i></a>
+            </div>
+            <div class="p-4">
+                <p>Bienvenido al panel de administración. Utiliza el menú lateral para gestionar los productos, usuarios y pedidos de tu tienda.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/app-admin.js"></script>
+    <script src="js/menu-admin.js"></script>
+</body>
+</html>
