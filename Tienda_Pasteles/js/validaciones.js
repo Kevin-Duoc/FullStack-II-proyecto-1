@@ -1,63 +1,80 @@
-// Validaciones para el inicio de sesión
+// validaciones.js
+
 document.addEventListener('DOMContentLoaded', () => {
+    const usuarios = [
+        { correo: 'admin@duoc.cl', contrasena: '12345', rol: 'administrador' },
+        { correo: 'vendedor@duoc.cl', contrasena: '12345', rol: 'vendedor' },
+        { correo: 'cliente@gmail.com', contrasena: '12345', rol: 'cliente' }
+    ];
+
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', (event) => {
-            let valid = true;
+            event.preventDefault();
             const correoInput = document.getElementById('correo');
             const contrasenaInput = document.getElementById('contrasena');
+            const correo = correoInput.value.trim();
+            const contrasena = contrasenaInput.value.trim();
 
-            // Validación de correo
-            if (correoInput.value.length > 100) {
-                alert('El correo no puede exceder los 100 caracteres.');
-                valid = false;
-            }
-            const emailRegex = /@duoc.cl$|@profesor.duoc.cl$|@gmail.com$/;
-            if (!emailRegex.test(correoInput.value)) {
-                alert('El correo debe ser de los dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.');
-                valid = false;
-            }
-
-            // Validación de contraseña
-            if (contrasenaInput.value.length < 4 || contrasenaInput.value.length > 10) {
-                alert('La contraseña debe tener entre 4 y 10 caracteres.');
-                valid = false;
-            }
-
-            if (!valid) {
-                event.preventDefault();
-            }
-        });
-    }
-
-// Validaciones para el registro
-    const registroForm = document.getElementById('registro-form');
-    if (registroForm) {
-        registroForm.addEventListener('submit', (event) => {
             let valid = true;
-            const nombreCompleto = document.getElementById('nombreCompleto').value;
-            const correo = document.getElementById('correo').value;
-            const contrasena = document.getElementById('contrasena').value;
-            const confirmarContrasena = document.getElementById('confirmarContrasena').value;
 
-            // Validación de nombre
-            if (nombreCompleto.length > 100) {
-                alert('El nombre completo no puede exceder los 100 caracteres.');
-                valid = false;
-            }
-
-            // Validación de correo
             if (correo.length > 100) {
                 alert('El correo no puede exceder los 100 caracteres.');
                 valid = false;
             }
-            const emailRegex = /@duoc.cl$|@profesor.duoc.cl$|@gmail.com$/;
+            const emailRegex = /(@duoc.cl|@profesor.duoc.cl|@gmail.com)$/;
             if (!emailRegex.test(correo)) {
                 alert('El correo debe ser de los dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.');
                 valid = false;
             }
 
-            // Validación de contraseña y confirmación
+            if (contrasena.length < 4 || contrasena.length > 10) {
+                alert('La contraseña debe tener entre 4 y 10 caracteres.');
+                valid = false;
+            }
+            
+            if (valid) {
+                const usuario = usuarios.find(u => u.correo === correo && u.contrasena === contrasena);
+                
+                if (usuario) {
+                    sessionStorage.setItem('userRole', usuario.rol);
+                    sessionStorage.setItem('userEmail', usuario.correo);
+                    alert(`¡Bienvenido(a), ${usuario.correo}!`);
+                    if (usuario.rol === 'administrador' || usuario.rol === 'vendedor') {
+                        window.location.href = 'home-admin.html';
+                    } else if (usuario.rol === 'cliente') {
+                        window.location.href = 'sesionIniciada.html';
+                    }
+                } else {
+                    alert('Correo o contraseña incorrectos.');
+                }
+            }
+        });
+    }
+
+    const registroForm = document.getElementById('registro-form');
+    if (registroForm) {
+        registroForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const nombreCompleto = document.getElementById('nombreCompleto').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const contrasena = document.getElementById('contrasena').value.trim();
+            const confirmarContrasena = document.getElementById('confirmarContrasena').value.trim();
+
+            let valid = true;
+            if (nombreCompleto.length > 100) {
+                alert('El nombre completo no puede exceder los 100 caracteres.');
+                valid = false;
+            }
+            if (correo.length > 100) {
+                alert('El correo no puede exceder los 100 caracteres.');
+                valid = false;
+            }
+            const emailRegex = /(@duoc.cl|@profesor.duoc.cl|@gmail.com)$/;
+            if (!emailRegex.test(correo)) {
+                alert('El correo debe ser de los dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.');
+                valid = false;
+            }
             if (contrasena.length < 4 || contrasena.length > 10) {
                 alert('La contraseña debe tener entre 4 y 10 caracteres.');
                 valid = false;
@@ -67,46 +84,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 valid = false;
             }
 
-            if (!valid) {
-                event.preventDefault();
+            if (valid) {
+                sessionStorage.setItem('userRole', 'cliente');
+                sessionStorage.setItem('userEmail', correo);
+                alert('¡Registro exitoso!');
+                window.location.href = 'sesionIniciada.html';
             }
         });
     }
 
-// Validaciones para contacto
     const contactoForm = document.getElementById('contacto-form');
     if (contactoForm) {
         contactoForm.addEventListener('submit', (event) => {
-            let valid = true;
-            const nombre = document.getElementById('nombre').value;
-            const correo = document.getElementById('correo').value;
-            const comentario = document.getElementById('comentario').value;
+            event.preventDefault();
+            const userIsLoggedIn = sessionStorage.getItem('userRole');
 
-            // Validación de nombre
+            if (!userIsLoggedIn) {
+                alert('Debes iniciar sesión para enviar un mensaje.');
+                window.location.href = 'inicioSesion.html';
+                return;
+            }
+            
+            const nombre = document.getElementById('nombre').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const comentario = document.getElementById('comentario').value.trim();
+
+            let valid = true;
             if (nombre.length > 100) {
                 alert('El nombre no puede exceder los 100 caracteres.');
                 valid = false;
             }
-
-            // Validación de correo
             if (correo.length > 100) {
                 alert('El correo no puede exceder los 100 caracteres.');
                 valid = false;
             }
-            const emailRegex = /@duoc.cl$|@profesor.duoc.cl$|@gmail.com$/;
+            const emailRegex = /(@duoc.cl|@profesor.duoc.cl|@gmail.com)$/;
             if (!emailRegex.test(correo)) {
                 alert('El correo debe ser de los dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.');
                 valid = false;
             }
-
-            // Validación de comentario
             if (comentario.length > 500) {
                 alert('El comentario no puede exceder los 500 caracteres.');
                 valid = false;
             }
 
-            if (!valid) {
-                event.preventDefault();
+            if (valid) {
+                alert('Mensaje enviado con éxito.');
+                contactoForm.reset();
             }
         });
     }

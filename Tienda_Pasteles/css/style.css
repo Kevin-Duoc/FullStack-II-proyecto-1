@@ -124,23 +124,24 @@ main .product-main-image-container {
     color: #B0BEC5; /* Color Gris Claro */
 }
 
-/*para cortar textos con puntos suspensivos*/
+/* para cortar textos con puntos suspensivos */
 .card-title {
     display: -webkit-box;
     -webkit-line-clamp: 1; /* solo permite 1 línea */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-clamp: 1;
 }
 
-/*Estilo para el nombre de la pasteleria*/
+/* Estilo para el nombre de la pasteleria */
 .site-name {
-font-family: 'Lobster', cursive;
-font-size: 2rem; 
-color: #6B3A1C;
+    font-family: 'Lobster', cursive;
+    font-size: 2rem; 
+    color: #6B3A1C;
 }
 
-/*Estilo para el texto del boton de "reigstrate aqui" dentro de iniciar sesión*/
+/* Estilo para el texto del boton de "reigstrate aqui" dentro de iniciar sesión */
 .registro-link {
     color: #6B3A1C;
     text-decoration: none;
@@ -150,7 +151,7 @@ color: #6B3A1C;
     text-decoration: underline;
 }
 
-/*Estilo para el boton de registro e iniciar sesión*/
+/* Estilo para el boton de registro e iniciar sesión */
 .nav-link-personalizado {
     display: inline-block; 
     padding: 5px 8px; 
@@ -165,4 +166,44 @@ color: #6B3A1C;
     cursor: pointer; 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
     margin-right: 15px;
+}
+.nav-link-personalizado:hover {
+    background-color: #6B3A1C;
+}
+/* Estilos para la vista de administración */
+.admin-sidebar {
+    background-color: #343a40;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.admin-sidebar .nav-link {
+    color: #b0bec5;
+}
+
+.admin-sidebar .nav-link:hover {
+    background-color: #495057;
+    color: #fff;
+}
+
+.admin-content {
+    background-color: #f8f9fa;
+}
+
+.admin-header {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para el botón de nuevo usuario en el administrador */
+.btn-admin-nuevo {
+    background-color: #FFC0CB;
+    color: #8B4513;
+    border-color: #FFC0CB;
+    font-weight: bold;
+}
+.btn-admin-nuevo:hover {
+    background-color: #ffb5d0;
+    border-color: #ffb5d0;
+    color: #8B4513;
 }
