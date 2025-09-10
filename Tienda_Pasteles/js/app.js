@@ -1,3 +1,5 @@
+// js/app.js
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const productos = [
@@ -116,31 +118,51 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const obtenerCarro = () => {
-        const carro = localStorage.getItem('carro');
+        const carro = sessionStorage.getItem('carro');
         return carro ? JSON.parse(carro) : [];
     };
 
     const guardarCarro = (carro) => {
-        localStorage.setItem('carro', JSON.stringify(carro));
+        sessionStorage.setItem('carro', JSON.stringify(carro));
+        window.dispatchEvent(new Event('carroActualizado')); 
     };
-
-    const actualizarContadorCarro = () => {
-        const carro = obtenerCarro();
-        const contador = carro.reduce((total, item) => total + item.cantidad, 0);
-        const contadorElement = document.getElementById('cart-count');
-        if (contadorElement) {
-            contadorElement.textContent = `Carro (${contador})`;
+    
+    const obtenerDescuento = () => {
+        if (sessionStorage.getItem('descuentoCincuenta')) {
+            return 50;
+        } else if (sessionStorage.getItem('descuentoFelices50')) {
+            return 10;
         }
+        return 0;
     };
-
+    
     const listarProductos = () => {
         const productListContainer = document.getElementById('product-list');
         if (productListContainer) {
             productListContainer.innerHTML = '';
+            const descuento = obtenerDescuento();
             
             productos.forEach(producto => {
                 const productCard = document.createElement('div');
                 productCard.className = 'col-md-3 mb-4';
+                
+                let precioHTML = `<p class="card-text"><strong>$${producto.precio.toLocaleString('es-CL')}</strong></p>`;
+                if (descuento > 0) {
+                    const precioConDescuento = Math.round(producto.precio * (1 - descuento / 100));
+                    precioHTML = `
+                        <p class="card-text">
+                            <span style="color:red; text-decoration: line-through; margin-right:8px;">
+                                $${producto.precio.toLocaleString('es-CL')}
+                            </span>
+                            <span style="color:green; font-weight:bold;">
+                                $${precioConDescuento.toLocaleString('es-CL')}
+                            </span>
+                            <br>
+                            <small class="text-success">(${descuento}% dcto aplicado)</small>
+                        </p>
+                    `;
+                }
+
                 productCard.innerHTML = `
                     <div class="card">
                         <div class="card-img-container">
@@ -148,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="card-body text-center">
                             <h5 class="card-title">${producto.nombre}</h5>
-                            <p class="card-text"><strong>$${producto.precio.toLocaleString('es-CL')}</strong></p>
+                            ${precioHTML}
                             <a href="detalleProducto.html?id=${producto.id}" class="btn btn-primary">Ver detalle</a>
                         </div>
                     </div>
@@ -160,18 +182,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mostrarDetalleProducto = () => {
         const urlParams = new URLSearchParams(window.location.search);
-        let productId = urlParams.get('id');
-        
-        // Carga el primer producto por defecto si no hay un ID en la URL
+        const productId = urlParams.get('id');
+
         if (!productId) {
-            productId = productos[0].id;
+            return;
         }
 
         const producto = productos.find(p => p.id === productId);
 
         if (producto) {
             document.getElementById('product-name').textContent = producto.nombre;
-            document.getElementById('product-price').textContent = `$${producto.precio.toLocaleString('es-CL')}`;
+            
+            const descuento = obtenerDescuento();
+            const precioElement = document.getElementById('product-price');
+            let precioHTML = `<strong>$${producto.precio.toLocaleString('es-CL')}</strong>`;
+
+            if (descuento > 0) {
+                const precioConDescuento = Math.round(producto.precio * (1 - descuento / 100));
+                precioHTML = `
+                    <p class="h4">
+                        <span style="color:red; text-decoration: line-through; margin-right:8px;">
+                            $${producto.precio.toLocaleString('es-CL')}
+                        </span>
+                        <span style="color:green; font-weight:bold;">
+                            $${precioConDescuento.toLocaleString('es-CL')}
+                        </span>
+                        <br>
+                        <small class="text-success">(${descuento}% dcto aplicado)</small>
+                    </p>
+                `;
+            } else {
+                precioHTML = `<p class="h4"><strong>$${producto.precio.toLocaleString('es-CL')}</strong></p>`;
+            }
+            precioElement.innerHTML = precioHTML;
+
+
             document.getElementById('product-description').textContent = producto.descripcion;
             
             const productImage = document.getElementById('product-image');
@@ -183,7 +228,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const addToCartBtn = document.getElementById('add-to-cart-btn');
             if (addToCartBtn) {
                 addToCartBtn.addEventListener('click', () => {
-                    agregarAlCarro(producto, 1);
+                    if (!sessionStorage.getItem('usuarioActual')) {
+                        alert('Debes iniciar sesión o registrarte para añadir productos al carro.');
+                        window.location.href = 'inicioSesion.html';
+                        return;
+                    }
+
+                    const cantidadInput = document.getElementById('cantidad');
+                    const cantidad = parseInt(cantidadInput.value, 10);
+                    if (cantidad > 0) {
+                        agregarAlCarro(producto, cantidad);
+                    } else {
+                        alert('La cantidad debe ser mayor a 0.');
+                    }
                 });
             }
             mostrarProductosRelacionados(producto.id);
@@ -191,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const container = document.getElementById('product-detail-container');
             if (container) {
-                container.innerHTML = '<div class="alert alert-danger" role="alert">Producto no encontrado. Por favor, navega desde la página de productos.</div>';
+                container.innerHTML = '<div class="alert alert-danger" role="alert">Producto no encontrado.</div>';
             }
         }
     };
@@ -202,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
             miniaturasContainer.innerHTML = '';
             for (let i = 0; i < 3; i++) {
                 const miniaturaDiv = document.createElement('div');
-                miniaturaDiv.className = 'product-thumbnail';
+                miniaturaDiv.className = 'product-thumbnail me-2';
                 miniaturaDiv.innerHTML = `<img src="images/${imagenPrincipal}" alt="Miniatura">`;
                 miniaturasContainer.appendChild(miniaturaDiv);
             }
@@ -217,10 +274,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const productosRelacionados = productosFiltrados.sort(() => 0.5 - Math.random()).slice(0, 4);
             
             relatedProductsContainer.innerHTML = '';
+            const descuento = obtenerDescuento();
 
             productosRelacionados.forEach(producto => {
                 const productCard = document.createElement('div');
                 productCard.className = 'col-md-3 mb-4';
+
+                let precioHTML = `<p class="card-text"><strong>$${producto.precio.toLocaleString('es-CL')}</strong></p>`;
+                if (descuento > 0) {
+                    const precioConDescuento = Math.round(producto.precio * (1 - descuento / 100));
+                    precioHTML = `
+                        <p class="card-text">
+                            <span style="color:red; text-decoration: line-through; margin-right:8px;">
+                                $${producto.precio.toLocaleString('es-CL')}
+                            </span>
+                            <span style="color:green; font-weight:bold;">
+                                $${precioConDescuento.toLocaleString('es-CL')}
+                            </span>
+                            <br>
+                            <small class="text-success">(${descuento}% dcto aplicado)</small>
+                        </p>
+                    `;
+                }
+
                 productCard.innerHTML = `
                     <div class="card">
                         <div class="card-img-container">
@@ -228,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="card-body text-center">
                             <h5 class="card-title">${producto.nombre}</h5>
-                            <p class="card-text"><strong>$${producto.precio.toLocaleString('es-CL')}</strong></p>
+                            ${precioHTML}
                             <a href="detalleProducto.html?id=${producto.id}" class="btn btn-primary">Ver detalle</a>
                         </div>
                     </div>
@@ -239,64 +315,185 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const agregarAlCarro = (producto, cantidad) => {
-        const carro = [{ ...producto, cantidad }];
+        let carro = obtenerCarro();
+        const itemExistente = carro.find(item => item.id === producto.id);
+        const descuento = obtenerDescuento();
+        let precioFinal = producto.precio;
+
+        if (descuento > 0) {
+            precioFinal = Math.round(producto.precio * (1 - descuento / 100));
+        }
+
+        if (itemExistente) {
+            itemExistente.cantidad += cantidad;
+        } else {
+            carro.push({ ...producto, cantidad, precioFinal });
+        }
+        
         guardarCarro(carro);
-        actualizarContadorCarro();
-        alert(`${cantidad} ${producto.nombre} agregado(s) al carro.`);
+        alert(`${cantidad} ${producto.nombre}(s) agregado(s) al carro.`);
     };
 
     const mostrarCarro = () => {
         const cartItemsContainer = document.getElementById('cart-items');
         const cartTotalElement = document.getElementById('cart-total');
+        const couponForm = document.getElementById('coupon-form');
+        const pagarBtn = document.getElementById('pagar-btn');
+
+        if (!cartItemsContainer || !cartTotalElement) return;
+
         let carro = obtenerCarro();
         
-        if (cartItemsContainer) {
-            if (carro.length === 0) {
-                const productosPorDefecto = [
-                    productos.find(p => p.id === 'PI001'),
-                    productos.find(p => p.id === 'PT002'),
-                    productos.find(p => p.id === 'TE001')
-                ];
-                carro = productosPorDefecto.filter(p => p).map(p => ({ ...p, cantidad: 1 }));
-                guardarCarro(carro);
-            }
-            
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
 
-            if (carro.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="text-center">Tu carro de compras está vacío.</p>';
-            } else {
-                carro.forEach(item => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'd-flex align-items-center mb-4';
-                    const subtotal = item.precio * item.cantidad;
-                    total += subtotal;
+        if (carro.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="text-center">Tu carro de compras está vacío.</p>';
+        } else {
+            carro.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'd-flex align-items-center mb-4';
+                const precio = item.precioFinal || item.precio;
+                const subtotal = precio * item.cantidad;
+                total += subtotal;
 
-                    itemElement.innerHTML = `
-                        <div class="card-img-container" style="width: 150px; height: 150px;">
-                            <img src="images/${item.imagen}" alt="${item.nombre}">
+                itemElement.innerHTML = `
+                    <div class="card-img-container me-3" style="width: 150px; height: 150px;">
+                        <img src="images/${item.imagen}" alt="${item.nombre}" style="object-fit: contain; width: 100%; height: 100%;">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h4>${item.nombre}</h4>
+                        <p class="h5"><strong>$${subtotal.toLocaleString('es-CL')}</strong></p>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm btn-outline-secondary me-2 decrease-quantity" data-id="${item.id}">-</button>
+                            <span>Cantidad: ${item.cantidad}</span>
+                            <button class="btn btn-sm btn-outline-secondary ms-2 increase-quantity" data-id="${item.id}">+</button>
+                            <button class="btn btn-sm btn-outline-danger ms-3 remove-item" data-id="${item.id}">Eliminar</button>
                         </div>
-                        <div class="ms-3 flex-grow-1">
-                            <h4>${item.nombre}</h4>
-                            <p class="h5"><strong>$${subtotal.toLocaleString('es-CL')}</strong></p>
-                            <div class="d-flex align-items-center">
-                                <span>Cantidad: ${item.cantidad}</span>
-                            </div>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(itemElement);
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            cartItemsContainer.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    let carro = obtenerCarro();
+                    const item = carro.find(p => p.id === id);
+                    if (item) {
+                        item.cantidad++;
+                        guardarCarro(carro);
+                        mostrarCarro();
+                    }
                 });
-            }
-            if (cartTotalElement) {
-                cartTotalElement.textContent = `TOTAL: $${total.toLocaleString('es-CL')}`;
-            }
+            });
+
+            cartItemsContainer.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    let carro = obtenerCarro();
+                    const item = carro.find(p => p.id === id);
+                    if (item && item.cantidad > 1) {
+                        item.cantidad--;
+                        guardarCarro(carro);
+                        mostrarCarro();
+                    }
+                });
+            });
+
+            cartItemsContainer.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    let carro = obtenerCarro();
+                    carro = carro.filter(p => p.id !== id);
+                    guardarCarro(carro);
+                    mostrarCarro();
+                });
+            });
+        }
+
+        let totalFinal = total;
+        const descuentoAplicado = obtenerDescuento();
+        
+        if (descuentoAplicado > 0) {
+            totalFinal = total * (1 - descuentoAplicado / 100);
+            cartTotalElement.textContent = `$${totalFinal.toLocaleString('es-CL')}`;
+        } else {
+            cartTotalElement.textContent = `$${total.toLocaleString('es-CL')}`;
+        }
+
+        if (couponForm) {
+            couponForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const couponInput = document.getElementById('coupon-input');
+                const couponCode = couponInput.value.trim().toUpperCase();
+
+                if (couponCode === 'FELICES50' && !sessionStorage.getItem('descuentoCincuenta') && !sessionStorage.getItem('descuentoFelices50')) {
+                    totalFinal = total * 0.90;
+                    alert('Cupón aplicado con éxito. ¡Disfruta de tu 10% de descuento!');
+                    sessionStorage.setItem('descuentoFelices50', 'true');
+                    cartTotalElement.textContent = `$${totalFinal.toLocaleString('es-CL')}`;
+                } else if (couponCode === 'FELICES50') {
+                    alert('Ya tienes un descuento activo.');
+                } else {
+                    alert('Cupón inválido.');
+                }
+            });
+        }
+
+        if (pagarBtn) {
+            pagarBtn.addEventListener('click', () => {
+                const carro = obtenerCarro();
+                if (carro.length > 0) {
+                    const trackingNumber = 'TRACK-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                    
+                    const usuarioActual = JSON.parse(sessionStorage.getItem('usuarioActual'));
+                    
+                    const pedido = {
+                        id: trackingNumber,
+                        productos: carro,
+                        total: totalFinal,
+                        estado: 'Procesado',
+                        fecha: new Date().toLocaleDateString('es-CL'),
+                        usuario: usuarioActual ? usuarioActual.correo : 'invitado'
+                    };
+                    
+                    let pedidos = JSON.parse(sessionStorage.getItem('pedidos')) || [];
+                    pedidos.push(pedido);
+                    sessionStorage.setItem('pedidos', JSON.stringify(pedidos));
+                    
+                    alert('¡Compra realizada con éxito! Gracias por tu preferencia. Tu número de seguimiento es: ' + trackingNumber);
+                    sessionStorage.removeItem('carro');
+                    sessionStorage.removeItem('descuentoCincuenta');
+                    sessionStorage.removeItem('descuentoFelices50');
+                    window.location.reload();
+                } else {
+                    alert('Tu carrito está vacío. Agrega productos para continuar.');
+                }
+            });
         }
     };
     
-    // Llamadas globales
-    listarProductos();
-    mostrarDetalleProducto();
-    mostrarCarro();
-    actualizarContadorCarro();
+    if (window.location.pathname.includes('productos.html')) {
+        listarProductos();
+    }
+    if (window.location.pathname.includes('detalleProducto.html')) {
+        mostrarDetalleProducto();
+    }
+    if (window.location.pathname.includes('carro.html')) {
+        const userIsLoggedIn = sessionStorage.getItem('usuarioActual');
+        if (!userIsLoggedIn) {
+            alert('Debes iniciar sesión para ver tu carrito de compras.');
+            window.location.href = 'inicioSesion.html';
+            return;
+        }
+        mostrarCarro();
+    }
+    
+    if (window.location.pathname.includes('sesionIniciada.html') || window.location.pathname.includes('index.html')) {
+        const userRole = JSON.parse(sessionStorage.getItem('usuarioActual'))?.rol;
+        if (userRole) {
+            listarProductos();
+        }
+    }
 });
