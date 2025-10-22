@@ -40,7 +40,7 @@ Una aplicación web dinámica y responsiva que simula la tienda online para una 
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone <URL_DE_TU_REPOSITORIO>
+    git clone https://github.com/Kevin-Duoc/FullStack-II-proyecto-1.git
     ```
 
 2.  **Instalar dependencias:**
