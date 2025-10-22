@@ -9,14 +9,12 @@ const Contacto = () => {
         correo: '',
         comentario: ''
     });
-
-    // Cargar la sesión del usuario al montar el componente
+    //Cargar la sesión del usuario al montar el componente
     useEffect(() => {
         const usuarioActual = JSON.parse(sessionStorage.getItem('usuarioActual'));
         setUsuario(usuarioActual);
 
         if (usuarioActual) {
-            // Rellenar automáticamente si está logueado
             setFormData(prevData => ({
                 ...prevData,
                 nombre: usuarioActual.nombreCompleto || '',
@@ -35,8 +33,7 @@ const Contacto = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Validación de SESIÓN
+        //Validación de sesión
         if (!usuario) {
             alert('Debe iniciar sesión primero para enviar un mensaje.');
             navigate('/iniciar-sesion');
@@ -44,8 +41,7 @@ const Contacto = () => {
         }
 
         let valid = true;
-        
-        // Validación de Contenido
+        //validación de contenido
         if (formData.nombre.length > 100) {
             alert('El nombre no puede exceder los 100 caracteres.');
             valid = false;
@@ -65,7 +61,6 @@ const Contacto = () => {
         }
 
         if (valid) {
-            // Simulación: Guardar mensaje en localStorage 
             const nuevoMensaje = {
                 nombre: usuario.nombreCompleto,
                 correo: usuario.correo,
@@ -73,14 +68,14 @@ const Contacto = () => {
                 fecha: new Date().toISOString()
             };
 
-            const mensajes = JSON.parse(localStorage.getItem('mensajes') || '[]');
+            const mensajes = JSON.parse(sessionStorage.getItem('mensajes') || '[]');
             mensajes.unshift(nuevoMensaje);
-            localStorage.setItem('mensajes', JSON.stringify(mensajes));
+            sessionStorage.setItem('mensajes', JSON.stringify(mensajes));
             
             alert('Mensaje enviado con éxito');
             setFormData(prevData => ({
                 ...prevData,
-                comentario: '' // Limpiar solo el comentario
+                comentario: ''
             }));
         }
     };
@@ -91,11 +86,10 @@ const Contacto = () => {
                 <div className="col-md-8">
                     <div className="card p-4">
                         <div className="card-body">
-                            <h2 className="card-title text-center mb-4">FORMULARIO DE CONTACTOS</h2>
+                            <h2 className="card-title text-center mb-4">FORMULARIO DE CONTACTO</h2>
                             
                             <form id="contacto-form" onSubmit={handleSubmit} className="row g-3">
                                 
-                                {/* Campos de Nombre y Correo: Se ocultan si el usuario está logueado */}
                                 <div id="user-info-fields" style={{ display: usuario ? 'none' : 'block' }}>
                                     <div className="col-md-12">
                                         <label htmlFor="nombre" className="form-label">Nombre</label>

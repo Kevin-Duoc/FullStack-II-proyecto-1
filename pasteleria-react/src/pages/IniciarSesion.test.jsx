@@ -65,4 +65,26 @@ describe('Componente IniciarSesion', () => {
     expect(mockedNavigate).toHaveBeenCalledWith('/');
   });
 
+  it('debería navegar a /admin si el login de administrador es exitoso', async () => {
+    const user = userEvent.setup();
+    render(
+      <BrowserRouter>
+        <IniciarSesion />
+      </BrowserRouter>
+    );
+
+    const emailInput = screen.getByLabelText(/CORREO/i);
+    const passwordInput = screen.getByLabelText(/CONTRASEÑA/i);
+    const submitButton = screen.getByRole('button', { name: /iniciar sesión/i });
+
+    // Usamos las credenciales del administrador de data.js
+    await user.type(emailInput, 'admin@duoc.cl');
+    await user.type(passwordInput, '12345');
+    
+    await user.click(submitButton);
+
+    // Verificamos que se llamó a la función de navegar hacia la ruta /admin
+    expect(mockedNavigate).toHaveBeenCalledWith('/admin');
+  });
+
 });

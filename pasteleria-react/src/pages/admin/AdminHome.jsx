@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AdminHome = () => {
     const usuarioActual = JSON.parse(sessionStorage.getItem('usuarioActual'));
     const nombre = usuarioActual ? usuarioActual.nombreCompleto.split(' ')[0] : 'Administrador';
 
+    //estado para guardar mensajes
+    const [mensajes, setMensajes] = useState([]);
+
+    useEffect(() => {
+        const mensajesGuardados = JSON.parse(sessionStorage.getItem('mensajes') || '[]');
+        console.log("Mensajes leídos desde sessionStorage:", mensajesGuardados);
+        setMensajes(mensajesGuardados);
+    }, []);
+
     return (
         <div className="container-fluid">
-            {/* Mensaje de bienvenida adaptado del home-admin.html */}
             <div className="admin-header p-3 d-flex justify-content-between align-items-center">
                 <h2 id="welcome-admin">¡HOLA {nombre.toUpperCase()}!</h2>
                 <i className="material-icons">notifications</i>
@@ -15,7 +23,6 @@ const AdminHome = () => {
             <div className="p-4">
                 <p>Bienvenido al panel de administración. Utiliza el menú lateral para gestionar los productos, usuarios y pedidos de tu tienda.</p>
                 
-                {/* Módulos de Indicadores (Mantenemos la estructura de tu Figura 9) */}
                 <div className="row g-4 mt-3">
                     <div className="col-md-4">
                         <div className="card p-3 bg-primary text-white text-center">
@@ -40,10 +47,26 @@ const AdminHome = () => {
                     </div>
                 </div>
                 
-                {/* Aquí puedes mostrar el componente de Mensajes/Reportes (Pendiente de migración) */}
-                <div id="mensajes-container" className="mt-4">
-                    <h3>Mensajes Recientes</h3>
-                    <p>Cargando mensajes del formulario de contacto...</p>
+                <div id="mensajes-container" className="mt-5">
+                    <h3>Mensajes Recientes de Contacto</h3>
+                    
+                    {mensajes.length > 0 ? (
+                        mensajes.map((mensaje, index) => (
+                            <div className="card my-3" key={index}>
+                                <div className="card-header d-flex justify-content-between">
+                                    <strong>De: {mensaje.nombre} ({mensaje.correo})</strong>
+                                    <small>Fecha: {new Date(mensaje.fecha).toLocaleString('es-CL')}</small>
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text">{mensaje.mensaje}</p>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="alert alert-info mt-3">
+                            No hay mensajes recientes.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
