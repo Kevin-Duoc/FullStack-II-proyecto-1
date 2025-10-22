@@ -1,64 +1,58 @@
-# 🍰 Pastelería 1000 Sabores
+# 🍰 Pastelería 1000 Sabores (Proyecto en React)
 
-Proyecto de página web simple para la asignatura de FullStack II (FrontEnd) 
-El sitio corresponde a la **Pastelería 1000 Sabores**, donde los usuarios pueden navegar entre el catalogo de los productos que la tienda ofrece, adquirirlos al carrito y realizar el pedido, del mismo modo, registrar una cuenta de usuario. Tambien dispone de otras funciones, como el blog de articulos o publicaciones, y un formulario para consultas, sugerencias o reclamos.
-
----
-
-## 📂 Estructura del proyecto
-
-- **index.html** → Página principal (Home).  
-- **productos.html** → Listado de productos disponibles.  
-- **nosotros.html** → Información sobre la pastelería.  
-- **blogs.html** → Sección de artículos o publicaciones.  
-- **contacto.html** → Página de contacto.  
-- **registro.html** → Formulario de registro de usuario.  
-- **inicioSesion.html** → Página para iniciar sesión.  
-- **sesionIniciada.html** → Página de bienvenida al usuario después del registro/inicio de sesión.  
-- **carro.html** → Carrito de compras.  
-- **css/style.css** → Estilos personalizados.  
-- **js/app.js~validaciones.js** → Validaciones y lógica en JavaScript.  
+Una aplicación web dinámica y responsiva que simula la tienda online para una pastelería, incluyendo un panel de administración funcional. Este proyecto fue desarrollado como parte del curso de Desarrollo FullStack II.
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## 🖼️ Vistas Previas
 
-- **HTML5** → Estructura del sitio.  
-- **CSS3** + **Bootstrap 5** → Estilos y diseño responsivo.  
-- **JavaScript** → Validaciones y carga dinámica de comunas según región.  
+<img width="1863" height="930" alt="image" src="https://github.com/user-attachments/assets/a47e6d9c-0b1a-4601-bdf0-1e494292c95a" />
 
----
 
-## 🚀 Cómo ejecutar el proyecto
 
-1. Clonar o descargar el repositorio.  
-2. Abrir el archivo `index.html` en el navegador.  
-   - Recomendado: usar **Live Server** de VS Code para una mejor experiencia.  
+
 
 ---
 
-## 📋 Funcionalidades principales
+## ✨ Características
 
-- **Registro de usuario** con los campos:
-  - Nombre completo
-  - Correo
-  - Contraseña y confirmación
-  - Teléfono (opcional)
-  - Región y comuna (se cargan dinámicamente según la región seleccionada)
-
-- **Navegación completa** por menú con acceso a todas las páginas.  
-- **Carrito de compras.**  
-- **Validaciones básicas** en JavaScript.  
+- **Catálogo de Productos:** Navega por una amplia variedad de tortas y pasteles, visualizando su detalle, precio y stock.
+- **Carrito de Compras:** Añade productos al carrito y gestiona tu pedido.
+- **Autenticación de Usuarios:** Sistema de registro e inicio de sesión para una experiencia personalizada.
+- **Panel de Administración:** Una sección privada para:
+  - Gestionar el inventario de productos (Crear, Editar, Eliminar).
+  - Visualizar los mensajes y reseñas enviadas por los clientes.
+  - Revisar el stock crítico de los productos.
 
 ---
 
-## ⚠️ Nota importante
+## 🛠️ Tecnologías Utilizadas
 
-Este es un proyecto **estático** (solo HTML, CSS y JS).  
-No tiene un backend (PHP, Node.js, etc.), por lo que:
-- El formulario de registro **no guarda datos en una base de datos**.  
-- Para simular el flujo de registro, el botón **REGISTRAR** redirige a `sesionIniciada.html`.  
+- **React**
+- **Vite**
+- **React Router**
+- **Bootstrap 5**
+- **Vitest** (para pruebas unitarias)
 
+---
+
+## 🚀 Cómo Ejecutar el Proyecto
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone <URL_DE_TU_REPOSITORIO>
+    ```
+
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+
+3.  **Ejecutar el servidor de desarrollo:**
+    La aplicación se abrirá en `http://localhost:5173`.
+    ```bash
+    npm run dev
+    ```
 ---
 
 ## 👨‍💻 Autores
